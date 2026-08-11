@@ -6,7 +6,7 @@ on:
 env:
   DAY_OF_WEEK: Monday
 jobs:
-  deploy:
+  deploying:
     uses: ./.github/workflows/CacheAndOutputs.yml
     with:
       java-version: 21
