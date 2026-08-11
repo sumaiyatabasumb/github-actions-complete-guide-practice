@@ -7,6 +7,12 @@ env:
   DAY_OF_WEEK: Monday
 jobs:
   deploy:
-    uses: ./.github/workflows/CacheAndOutputs.yml
-    with:
-      java-version: 21
+    runs-on: ubuntu-latest
+    environment: Dev
+    steps:
+      - name: Get Cache and outputs details
+        uses: ./.github/workflows/CacheAndOutputs.yml
+        with:
+          java-version: 21
+      - name: Echo env variable
+        run: echo "Today is ${{ env.DAY_OF_WEEK }}"
