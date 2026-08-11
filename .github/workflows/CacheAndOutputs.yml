@@ -1,0 +1,61 @@
+name: Cache and Outputs
+on: 
+  workflow_call:
+    inputs:
+      java-version:
+        required: false
+        default: '17'
+        type: string
+        
+jobs:
+
+  setup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the code
+        run: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{inputs.java-version}}
+          distribution: 'temurin'
+          cache: maven
+          
+  build:
+    runs-on: ubuntu-latest
+    outputs: 
+      cache-status: ${{ steps.cache-status.outputs.dependency-status }}
+    steps:
+      - name: Checkout the code
+        run: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{inputs.java-version}}
+          distribution: 'temurin'
+          cache: maven
+      - name: Cache dependencies
+        id: maven-cache
+        uses: actions/cache@v3
+        with:
+          path: ~/.m2/repository #the path where the jar will be present
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+      - name: Set cache status
+        id: cache-status
+        run: |
+          if ["${{steps.maven-cache.outputs.cache-hit}}" = "true"]; then
+            echo "dependency-status = UNCHANGED_REUSING_CACHE" >> $GITHUB_OUTPUT
+          else
+            echo "dependency-status = CHANGED_DOWNLOADING_NEW" >> $GITHUB_OUTPUT
+          fi
+      - name: Build with Maven/First extend maven to allow for execution
+        run: chmod +x mvnw
+      - name: Now build with maven
+        run: ./mvnw clean package
+        
+  verify-cache:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check cached dependencies
+        run: echo "The cache dependency status is ${{ needs.build.outputs.cache-status }}""
