@@ -1,0 +1,7 @@
+name: Deploy using cache and outputs file
+on: push
+jobs:
+  deploy:
+    uses: ./.github/workflows/CacheAndOutputs.yml
+    with:
+      java-version: 21
