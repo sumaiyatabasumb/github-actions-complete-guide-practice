@@ -31,10 +31,10 @@ jobs:
       - name: Set cache status
         id: cache_status
         run: |
-          if ["${{steps.maven_cache.outputs.cache-hit}}" = "true"]; then
-            echo "dependency_status = UNCHANGED_REUSING_CACHE" >> $GITHUB_OUTPUT
+          if [ "${{steps.maven_cache.outputs.cache-hit}}" = "true" ]; then
+            echo "dependency_status=UNCHANGED_REUSING_CACHE" >> $GITHUB_OUTPUT
           else
-            echo "dependency_status = CHANGED_DOWNLOADING_NEW" >> $GITHUB_OUTPUT
+            echo "dependency_status=CHANGED_DOWNLOADING_NEW" >> $GITHUB_OUTPUT
           fi
       - name: Build with Maven/First extend maven to allow for execution
         run: chmod +x mvnw
