@@ -8,7 +8,7 @@ env:
 jobs:
   deploying:
     runs-on: ubuntu-latest
-    environment: Dev
+    # environment: Dev
     steps:
       - name: Get Cache and outputs details
         uses: ./.github/workflows/CacheAndOutputs.yml
@@ -16,3 +16,4 @@ jobs:
           java-version: 21
       - name: Echo env variable
         run: echo "Today is ${{ env.DAY_OF_WEEK }}"
+    environment: Dev
