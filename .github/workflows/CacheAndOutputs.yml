@@ -37,8 +37,10 @@ jobs:
             echo "dependency_status=CHANGED_DOWNLOADING_NEW" >> $GITHUB_OUTPUT
           fi
       - name: Build with Maven/First extend maven to allow for execution
+        if: steps.maven_cache.outputs.cache-hit != 'true'
         run: chmod +x mvnw
       - name: Now build with maven
+        if: steps.maven_cache.outputs.cache-hit != 'true'
         run: ./mvnw clean package
         
   verify-cache:
