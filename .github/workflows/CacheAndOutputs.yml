@@ -42,8 +42,15 @@ jobs:
         run: ./mvnw clean package
         
   verify-cache:
-    needs: [setup, build]
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: Check cached dependencies
         run: echo "The cache dependency status is ${{ needs.build.outputs.cache-status }}"
+
+  deploy:
+    needs: [build, verify-cache]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        run: echo "Deployment will happen using the deploy.yml workflow, this workflow is specifically for setup and build only"
