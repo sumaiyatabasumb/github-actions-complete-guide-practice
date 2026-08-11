@@ -8,18 +8,6 @@ on:
         type: string
         
 jobs:
-
-  setup:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        uses: actions/checkout@v7
-      - name: Setup JDK
-        uses: actions/setup-java@v5
-        with:
-          java-version: ${{inputs.java-version}}
-          distribution: 'temurin'
-          cache: maven
           
   build:
     runs-on: ubuntu-latest
