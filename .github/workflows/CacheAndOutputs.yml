@@ -58,4 +58,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check cached dependencies
-        run: echo "The cache dependency status is ${{ needs.build.outputs.cache-status }}""
+        run: echo "The cache dependency status is ${{ needs.build.outputs.cache-status }}"
