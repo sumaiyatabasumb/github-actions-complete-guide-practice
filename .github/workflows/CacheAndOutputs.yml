@@ -12,7 +12,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs: 
-      cache-status: ${{ steps.cache-status.outputs.dependency-status }}
+      cache_status: ${{ steps.cache_status.outputs.dependency_status }}
     steps:
       - name: Checkout the code
         uses: actions/checkout@v4
@@ -23,18 +23,18 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Cache dependencies
-        id: maven-cache
+        id: maven_cache
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository #the path where the jar will be present
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
       - name: Set cache status
-        id: cache-status
+        id: cache_status
         run: |
-          if ["${{steps.maven-cache.outputs.cache-hit}}" = "true"]; then
-            echo "dependency-status = UNCHANGED_REUSING_CACHE" >> $GITHUB_OUTPUT
+          if ["${{steps.maven_cache.outputs.cache-hit}}" = "true"]; then
+            echo "dependency_status = UNCHANGED_REUSING_CACHE" >> $GITHUB_OUTPUT
           else
-            echo "dependency-status = CHANGED_DOWNLOADING_NEW" >> $GITHUB_OUTPUT
+            echo "dependency_status = CHANGED_DOWNLOADING_NEW" >> $GITHUB_OUTPUT
           fi
       - name: Build with Maven/First extend maven to allow for execution
         run: chmod +x mvnw
@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check cached dependencies
-        run: echo "The cache dependency status is ${{ needs.build.outputs.cache-status }}"
+        run: echo "The cache dependency status is ${{ needs.build.outputs.cache_status }}"
 
   deploy:
     needs: [build, verify-cache]
