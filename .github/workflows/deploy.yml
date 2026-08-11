@@ -6,14 +6,8 @@ on:
 env:
   DAY_OF_WEEK: Monday
 jobs:
-  deploying:
-    runs-on: ubuntu-latest
-    # environment: Dev
-    steps:
-      - name: Get Cache and outputs details
-        uses: ./.github/workflows/CacheAndOutputs.yml
-        with:
-          java-version: 21
-      - name: Echo env variable
-        run: echo "Today is ${{ env.DAY_OF_WEEK }}"
-    environment: Dev
+  deploy:
+    uses: ./.github/workflows/CacheAndOutputs.yml
+    with:
+      java-version: 21
+    # run: echo "Today is ${{ env.DAY_OF_WEEK }}" Cannot have steps and runs-on if we have uses under a job. 
