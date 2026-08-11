@@ -27,7 +27,7 @@ jobs:
       cache-status: ${{ steps.cache-status.outputs.dependency-status }}
     steps:
       - name: Checkout the code
-        run: actions/checkout@v4
+        uses: actions/checkout@v4
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
