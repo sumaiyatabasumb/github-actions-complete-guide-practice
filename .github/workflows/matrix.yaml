@@ -1,0 +1,21 @@
+name: Matrix Strategy
+on: workflow_dispatch
+jobs:
+  build:
+    strategy:
+      matrix:
+        operating-system: [ubuntu-latest, windows-latest]
+        java-versions: [11, 17, 21]
+    runs-on: ${{ matrix.operating-system }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Setup JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: ${{ matrix.java-versions }}
+          distribution: 'temurin'
+      - name: Execute permissions to maven
+        run: chmod +x mvnw
+      - name: Maven Build
+        run: ./mvnw clean package
