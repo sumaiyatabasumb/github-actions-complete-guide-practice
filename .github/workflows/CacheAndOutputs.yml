@@ -23,11 +23,18 @@ jobs:
           distribution: 'temurin'
           cache: maven
       - name: Cache dependencies
+        continue-on-error: true
         id: maven_cache
         uses: actions/cache@v3
         with:
           path: ~/.m2/repository #the path where the jar will be present
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+      - name: Build with Maven/First extend maven to allow for execution
+        if: steps.maven_cache.outputs.cache-hit != 'true'
+        run: chmod +x mvnw
+      - name: Now build with maven
+        if: steps.maven_cache.outputs.cache-hit != 'true'
+        run: ./mvnw clean package
       - name: Set cache status
         id: cache_status
         run: |
@@ -36,12 +43,6 @@ jobs:
           else
             echo "dependency_status=CHANGED_DOWNLOADING_NEW" >> $GITHUB_OUTPUT
           fi
-      - name: Build with Maven/First extend maven to allow for execution
-        if: steps.maven_cache.outputs.cache-hit != 'true'
-        run: chmod +x mvnw
-      - name: Now build with maven
-        if: steps.maven_cache.outputs.cache-hit != 'true'
-        run: ./mvnw clean package
         
   verify-cache:
     needs: build
