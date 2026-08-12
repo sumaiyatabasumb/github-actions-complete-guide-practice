@@ -4,13 +4,13 @@ jobs:
   build:
     strategy:
       matrix:
-        java_versions: [11, 17, 21]
+        java_versions: [8, 11, 17]
         operating_system: [ubuntu-latest, windows-latest]
         include:
           - java_versions: 25
             operating_system: ubuntu-latest
         exclude:
-          - java_versions: 11
+          - java_versions: 21
             operating_system: windows-latest
     runs-on: ${{ matrix.operating_system }}
     
