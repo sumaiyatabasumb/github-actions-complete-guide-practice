@@ -4,24 +4,34 @@ jobs:
   build:
     strategy:
       matrix:
-        java-versions: [11, 17, 21]
-        operating-system: [ubuntu-latest, windows-latest]
+        java_versions: [11, 17, 21]
+        operating_system: [ubuntu-latest, windows-latest]
         include:
-          - java-versions: 25
-            operating-system: ubuntu-latest
+          - java_versions: 25
+            operating_system: ubuntu-latest
         exclude:
-          - java-versions: 11
-            operating-system: windows-latest
-    runs-on: ${{ matrix.operating-system }}
+          - java_versions: 11
+            operating_system: windows-latest
+    runs-on: ${{ matrix.operating_system }}
+    
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        
       - name: Setup JDK
         uses: actions/setup-java@v4
         with:
-          java-version: ${{ matrix.java-versions }}
+          java-version: ${{ matrix.java_versions }}
           distribution: 'temurin'
-      - name: Execute permissions to maven
+          
+      - name: Execute permissions to maven (Linux/Ubuntu)
+        if: runner.os != 'Windows'
         run: chmod +x mvnw
-      - name: Maven Build
+        
+      - name: Maven Build (Linux/Ubuntu)
+        if: runner.os != 'Windows'
         run: ./mvnw clean package
+
+      - name: Maven Build (Windows)
+        if: runner.os == 'Windows'
+        run: mvnw.cmd clean package
