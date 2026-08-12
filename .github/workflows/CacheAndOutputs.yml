@@ -4,7 +4,7 @@ on:
     inputs:
       java-version:
         required: false
-        default: '17'
+        # default: '17'
         type: string
         
 jobs:
