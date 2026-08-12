@@ -10,7 +10,7 @@ jobs:
           - java_versions: 25
             operating_system: ubuntu-latest
         exclude:
-          - java_versions: 21
+          - java_versions: 17
             operating_system: windows-latest
     runs-on: ${{ matrix.operating_system }}
     
