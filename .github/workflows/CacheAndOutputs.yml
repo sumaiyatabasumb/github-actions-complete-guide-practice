@@ -6,7 +6,10 @@ on:
         required: false
         # default: '17'
         type: string
-        
+    outputs:
+      result:
+        description: The result of this output
+        value: ${{ jobs.build.outputs.cache_status }}
 jobs:
           
   build:
