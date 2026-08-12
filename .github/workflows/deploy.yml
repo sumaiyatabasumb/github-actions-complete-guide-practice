@@ -11,3 +11,9 @@ jobs:
     with:
       java-version: 21
     # run: echo "Today is ${{ env.DAY_OF_WEEK }}" Cannot have steps and runs-on if we have uses under a job. 
+  checkingOutput:
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print output
+        run: echo "${{ needs.deploy.result }}"
