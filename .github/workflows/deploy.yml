@@ -1,7 +1,7 @@
 name: Deploy using cache and outputs file
 on: 
-  push:
-    branches: [main, dev]
+  # push:
+  #   branches: [main, dev]
   workflow_dispatch: 
 env:
   DAY_OF_WEEK: Tuesday
