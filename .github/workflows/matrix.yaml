@@ -23,6 +23,7 @@ jobs:
         with:
           java-version: ${{ matrix.java_versions }}
           distribution: 'temurin'
+          cache: maven
           
       - name: Execute permissions to maven (Linux/Ubuntu)
         if: runner.os != 'Windows'
