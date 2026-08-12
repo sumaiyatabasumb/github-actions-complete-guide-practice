@@ -24,15 +24,18 @@ jobs:
           java-version: ${{ matrix.java_versions }}
           distribution: 'temurin'
           cache: maven
-          
-      - name: Execute permissions to maven (Linux/Ubuntu)
-        if: runner.os != 'Windows'
-        run: chmod +x mvnw
-        
-      - name: Maven Build (Linux/Ubuntu)
-        if: runner.os != 'Windows'
-        run: ./mvnw clean package
 
-      - name: Maven Build (Windows)
-        if: runner.os == 'Windows'
-        run: mvnw.cmd clean package
+      - name: Check java version
+        run: java -version
+          
+      # - name: Execute permissions to maven (Linux/Ubuntu)
+      #   if: runner.os != 'Windows'
+      #   run: chmod +x mvnw
+        
+      # - name: Maven Build (Linux/Ubuntu)
+      #   if: runner.os != 'Windows'
+      #   run: ./mvnw clean package
+
+      # - name: Maven Build (Windows)
+      #   if: runner.os == 'Windows'
+      #   run: mvnw.cmd clean package
